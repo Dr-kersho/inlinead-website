@@ -1,5 +1,11 @@
 /* INLINE AD — page init */
 (function () {
+  if (location.hostname.endsWith('github.io') && location.pathname.startsWith('/inlinead-website')) {
+    const base = document.createElement('base');
+    base.href = '/inlinead-website/';
+    document.head.prepend(base);
+  }
+
   const i18n = window.INLINEAD_I18N;
   const forms = window.INLINEAD_FORMS;
 

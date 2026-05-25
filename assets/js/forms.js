@@ -49,7 +49,36 @@ window.INLINEAD_FORMS = (function () {
     if (el) el.classList.remove('show');
   }
 
-  async function submitLead(leadType, payload, lang) {
+  async function submitViaSupabase(leadType, payload, lang) {
+    const cfg = window.INLINEAD || {};
+    const base = cfg.supabaseUrl?.replace(/\/$/, '');
+    const key = cfg.supabaseAnonKey;
+    if (!base || !key) return null;
+
+    const res = await fetch(`${base}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        lead_type: leadType,
+        payload,
+        utm: getUtm(),
+        lang: lang === 'ar' ? 'ar' : 'en',
+        status: 'new',
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || 'Supabase insert failed');
+    }
+    return { ok: true };
+  }
+
+  async function submitViaNetlify(leadType, payload, lang) {
     const url = (window.INLINEAD && window.INLINEAD.submitUrl) || '/.netlify/functions/submit-lead';
     const res = await fetch(url, {
       method: 'POST',
@@ -64,6 +93,12 @@ window.INLINEAD_FORMS = (function () {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Submission failed');
     return data;
+  }
+
+  async function submitLead(leadType, payload, lang) {
+    const viaDb = await submitViaSupabase(leadType, payload, lang);
+    if (viaDb) return viaDb;
+    return submitViaNetlify(leadType, payload, lang);
   }
 
   function wireForm(formId, thanksId, leadType) {
