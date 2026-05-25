@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://inlinead.eg/sitemap.xml
+Sitemap: https://www.inlinead.eg/sitemap.xml

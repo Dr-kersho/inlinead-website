@@ -8,7 +8,7 @@
   <meta property="og:title" content="INLINE AD — In-gym advertising, performance tracked" />
   <meta property="og:description" content="Reach premium gym members in Alexandria. QR and redemption tracking — not guesses." />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://inlinead.eg/" />
+  <link rel="canonical" href="https://www.inlinead.eg/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -461,9 +461,17 @@
       justify-content: space-between;
       align-items: flex-start;
     }
-    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
     .footer-links a { color: var(--text-muted); text-decoration: none; }
     .footer-links a:hover { color: var(--text); }
+    .nav-wa { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-cta-alt {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .nav-cta-alt:hover { color: var(--text); background: var(--bg-card); text-decoration: none; }
+    .wa-link { font-variant-numeric: tabular-nums; }
 
     .form-alert {
       display: none;
@@ -478,7 +486,7 @@
     .form-alert.show { display: block; }
 
     @media (max-width: 599px) {
-      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-links a:not(.wa-link):not(.nav-cta) { display: none; }
       .hero { padding-top: 32px; }
     }
   </style>
@@ -489,7 +497,10 @@
     <div class="nav-links">
       <a href="#brands" data-i18n="nav_brands">For brands</a>
       <a href="#gyms" data-i18n="nav_gyms">For gyms</a>
-      <a href="https://wa.me/201000000000" class="nav-cta" data-i18n="nav_whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+      <div class="nav-wa">
+        <a href="https://wa.me/201097876876" class="nav-cta wa-link" data-wa="201097876876" target="_blank" rel="noopener">01097876876</a>
+        <a href="https://wa.me/201283311634" class="nav-cta nav-cta-alt wa-link" data-wa="201283311634" target="_blank" rel="noopener">01283311634</a>
+      </div>
       <button type="button" class="lang-btn" id="langToggle" aria-label="Toggle language">عربي</button>
     </div>
   </nav>
@@ -788,6 +799,8 @@
         <p style="margin-top:8px;" data-i18n="footer_loc">Alexandria, Egypt · Pre-launch</p>
       </div>
       <div class="footer-links">
+        <a href="https://wa.me/201097876876" class="wa-link" data-wa="201097876876" target="_blank" rel="noopener">01097876876</a>
+        <a href="https://wa.me/201283311634" class="wa-link" data-wa="201283311634" target="_blank" rel="noopener">01283311634</a>
         <a href="privacy.html" data-i18n="footer_privacy">Privacy</a>
         <a href="mailto:hello@inlinead.eg">hello@inlinead.eg</a>
       </div>
@@ -797,7 +810,7 @@
   <script>
     window.INLINEAD = {
       submitUrl: '/.netlify/functions/submit-lead',
-      whatsappNumber: '',
+      whatsappNumbers: ['201097876876', '201283311634'],
       supabaseUrl: '',
       supabaseAnonKey: ''
     };
